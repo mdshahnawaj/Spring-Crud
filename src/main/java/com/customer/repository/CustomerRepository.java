@@ -8,8 +8,6 @@ import com.customer.model.CustomerEntity;
  */
 public interface CustomerRepository extends JpaRepository<CustomerEntity, Integer> {
 
-	public boolean existsByEmailAndIdNot(String email, int id);
-
-	public boolean existsByMobileNumberAndIdNot(String mobileNumber, int id);
+	boolean existsByEmailAndIdNotOrMobileNumberAndIdNot(String email, int emailId, String mobileNumber, int mobileId);
 
 }

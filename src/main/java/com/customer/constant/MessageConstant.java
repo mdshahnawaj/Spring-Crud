@@ -29,12 +29,12 @@ public class MessageConstant {
 	public static final String ADDRESS_REQUIRED = "Address is mandatory to fill.";
 	public static final String ADDRESS_NOT_NULL = "Address not be null.";
 	public static final String ADDRESS_SIZE = "Address must be minimum 10 characters long.";
-	public static final String EMAIL_ALREADY_EXISTS = "Email already exists.";
-	public static final String MOBILE_NUMBER_ALREADY_EXISTS = "Mobile number already exists.";
+	public static final String EMAIL_MOBILE_EXISTS_MESSAGE = "Email or mobile already exists.";
 	public static final String SAVE_SUCCESS_MESSAGE = "Customer details saved successfully.";
 	public static final String UPDATE_SUCCESS_MESSAGE = "Customer details update successfully.";
 	public static final String RECORD_NOT_FOUND_MESSAGE = "Customer details not found.";
 	public static final String ID_NOT_FOUND = "Customer id is not found";
 	public static final String DELETE_ALL_CUSTOMER = "All customer records deleted successfully.";
+	public static final String RECORD_NOT_FOUND = "Record not found for delete";
 
 }

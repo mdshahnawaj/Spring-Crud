@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.customer.constant.MessageConstant;
 import com.customer.dto.CustomerDto;
+import com.customer.exception.EmailOrMobileAlreadyExists;
 import com.customer.exception.ResourceNotFoundException;
 import com.customer.model.CustomerEntity;
 import com.customer.service.CustomerService;
@@ -31,14 +32,18 @@ public class CustomerController {
 	private CustomerService customerService;
 
 	/**
-	 * This end-point used to save customer details and check email and mobile validation
+	 * This end-point used to save customer details with email and mobile validation
 	 * @param customerDto
 	 * @return response
 	 */
 	@PostMapping
 	public ResponseEntity<Object> create(@Valid @RequestBody CustomerDto customerDto) {
-		ResponseEntity<Object> response = customerService.saveDetails(customerDto);
-		return response;
+		try {
+			customerService.saveDetails(customerDto);
+			return ResponseEntity.status(HttpStatus.CREATED).body(MessageConstant.SAVE_SUCCESS_MESSAGE);
+		} catch (EmailOrMobileAlreadyExists exception) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(exception.getMessage());
+		}
 	}
 
 	/**
@@ -71,14 +76,18 @@ public class CustomerController {
 	}
 
 	/**
-	 * This end-point used to update customer details.
+	 * This end-point used to update customer details
 	 * @param customerDto
 	 * @return response
 	 */
 	@PutMapping
 	public ResponseEntity<Object> update(@Valid @RequestBody CustomerDto customerDto) {
-		ResponseEntity<Object> response = customerService.saveDetails(customerDto);
-		return response;
+		try {
+			customerService.saveDetails(customerDto);
+			return ResponseEntity.status(HttpStatus.OK).body(MessageConstant.UPDATE_SUCCESS_MESSAGE);
+		} catch (EmailOrMobileAlreadyExists exception) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
+		}
 	}
 
 	/**
@@ -87,12 +96,12 @@ public class CustomerController {
 	 * @return response message
 	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteCustomer(@PathVariable int id) {
+	public ResponseEntity<String> deleteCustomerById(@PathVariable int id) {
 		try {
 			customerService.deleteById(id);
 			return ResponseEntity.ok("Customer with ID " + id + " has been deleted");
-		} catch (ResourceNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		} catch (ResourceNotFoundException exception) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
 		}
 	}
 
@@ -105,8 +114,8 @@ public class CustomerController {
 		try {
 			String responseMessage = customerService.deleteAllCustomer();
 			return ResponseEntity.ok(responseMessage);
-		} catch (RuntimeException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+		} catch (RuntimeException exception) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
 		}
 	}
 

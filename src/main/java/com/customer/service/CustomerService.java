@@ -1,7 +1,6 @@
 package com.customer.service;
 
 import java.util.List;
-import org.springframework.http.ResponseEntity;
 import com.customer.dto.CustomerDto;
 import com.customer.model.CustomerEntity;
 
@@ -10,7 +9,7 @@ import com.customer.model.CustomerEntity;
  */
 public interface CustomerService {
 
-	public ResponseEntity<Object> saveDetails(CustomerDto customerDto);
+	public CustomerDto saveDetails(CustomerDto customerDto);
 
 	public List<CustomerEntity> getAllCustomer();
 
