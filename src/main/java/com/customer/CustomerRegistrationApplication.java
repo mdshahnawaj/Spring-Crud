@@ -11,13 +11,17 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class CustomerRegistrationApplication {
 
+	public static void main(String[] args) {
+		SpringApplication.run(CustomerRegistrationApplication.class, args);
+	}
+
+	/**
+	 * Creates and configures a ModelMapper instance.
+	 * @return A configured ModelMapper instance that can be used for object mapping.
+	 */
 	@Bean
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
-	}
-
-	public static void main(String[] args) {
-		SpringApplication.run(CustomerRegistrationApplication.class, args);
 	}
 
 }

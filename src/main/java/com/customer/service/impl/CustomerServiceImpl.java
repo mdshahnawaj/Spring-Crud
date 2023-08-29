@@ -27,16 +27,14 @@ public class CustomerServiceImpl implements CustomerService {
 	/**
 	 * This method is used to save customer details in database
 	 * @param customerDto
-	 * @return response message
+	 * @return response
 	 */
 	@Override
 	public CustomerDto saveDetails(CustomerDto customerDto) {
 		int emailId = customerDto.getId();
 		int mobileId = customerDto.getId();
-		String email = customerDto.getEmail();
-		String mobileNumber = customerDto.getMobileNumber();
 
-		boolean existsEmailOrMobile = customerRepository.existsByEmailAndIdNotOrMobileNumberAndIdNot(email, emailId, mobileNumber, mobileId);
+		boolean existsEmailOrMobile = customerRepository.existsByEmailAndIdNotOrMobileNumberAndIdNot(customerDto.getEmail(), emailId, customerDto.getMobileNumber(), mobileId);
 		if (existsEmailOrMobile) {
 			throw new EmailOrMobileAlreadyExists(MessageConstant.EMAIL_MOBILE_EXISTS_MESSAGE);
 		}
@@ -51,19 +49,18 @@ public class CustomerServiceImpl implements CustomerService {
 	 */
 	@Override
 	public List<CustomerEntity> getAllCustomer() {
-		List<CustomerEntity> customer = customerRepository.findAll();
-		return customer;
+		return customerRepository.findAll();
 	}
 
 	/**
 	 * This method is used to get customer details by id from database
 	 * @param id
+	 * @throw exception
 	 * @return customerDetails
 	 */
 	@Override
 	public CustomerEntity getCustomerById(int id) {
-		CustomerEntity customer = customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(MessageConstant.ID_NOT_FOUND));
-		return customer;
+		return customerRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(MessageConstant.ID_NOT_FOUND));
 	}
 
 	/**

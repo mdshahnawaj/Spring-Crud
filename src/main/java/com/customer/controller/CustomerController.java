@@ -24,8 +24,8 @@ import com.customer.service.CustomerService;
  * This is controller class is used for perform crud rest api operation
  * @author MdShahnawaj
  */
-@RequestMapping("/customer")
 @RestController
+@RequestMapping("/customer")
 public class CustomerController {
 
 	@Autowired
@@ -52,12 +52,12 @@ public class CustomerController {
 	 */
 	@GetMapping
 	public ResponseEntity<Object> read() {
-		List<CustomerEntity> customer = customerService.getAllCustomer();
+		List<CustomerEntity> customerDetails = customerService.getAllCustomer();
 
-		if (customer.isEmpty()) {
+		if (customerDetails.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(MessageConstant.RECORD_NOT_FOUND_MESSAGE);
 		} else {
-			return ResponseEntity.ok(customer);
+			return ResponseEntity.status(HttpStatus.OK).body(customerDetails);
 		}
 	}
 
@@ -69,7 +69,7 @@ public class CustomerController {
 	public ResponseEntity<Object> getCustomerById(@PathVariable int id) {
 		try {
 			CustomerEntity customerDetails = customerService.getCustomerById(id);
-			return ResponseEntity.ok(customerDetails);
+			return ResponseEntity.status(HttpStatus.OK).body(customerDetails);
 		} catch (ResourceNotFoundException exception) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
 		}
@@ -99,7 +99,7 @@ public class CustomerController {
 	public ResponseEntity<String> deleteCustomerById(@PathVariable int id) {
 		try {
 			customerService.deleteById(id);
-			return ResponseEntity.ok("Customer with ID " + id + " has been deleted");
+			return ResponseEntity.status(HttpStatus.OK).body(MessageConstant.CUSTOMER_DELETED_MESSAGE + id);
 		} catch (ResourceNotFoundException exception) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
 		}
@@ -113,7 +113,7 @@ public class CustomerController {
 	public ResponseEntity<String> deleteAllCustomers() {
 		try {
 			String responseMessage = customerService.deleteAllCustomer();
-			return ResponseEntity.ok(responseMessage);
+			return ResponseEntity.status(HttpStatus.OK).body(responseMessage);
 		} catch (RuntimeException exception) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exception.getMessage());
 		}

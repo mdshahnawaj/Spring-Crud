@@ -34,6 +34,7 @@ public class MessageConstant {
 	public static final String UPDATE_SUCCESS_MESSAGE = "Customer details update successfully.";
 	public static final String RECORD_NOT_FOUND_MESSAGE = "Customer details not found.";
 	public static final String ID_NOT_FOUND = "Customer id is not found";
+	public static final String CUSTOMER_DELETED_MESSAGE = "Customer has been successfully deleted with id : ";
 	public static final String DELETE_ALL_CUSTOMER = "All customer records deleted successfully.";
 	public static final String RECORD_NOT_FOUND = "Record not found for delete";
 
